@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
     private fun bindState() {
         lifecycleScope.launchWhenStarted {
             uiState.collectLatest {
-                when(it) {
+                when (it) {
                     is HomeUiState.Loading -> {
                         showSnackbar(R.string.loading)
                     }

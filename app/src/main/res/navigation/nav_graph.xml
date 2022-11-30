@@ -10,4 +10,14 @@
         android:name="com.example.newsapp.ui.home.view.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/bookmarkFragment"
+        android:name="com.example.newsapp.ui.bookmark.view.BookmarkFragment"
+        android:label="Bookmark"
+        tools:layout="@layout/fragment_bookmark" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.newsapp.ui.profile.view.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
