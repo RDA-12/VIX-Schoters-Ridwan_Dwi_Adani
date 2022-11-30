@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.newsapp.R
 import com.example.newsapp.data.repositories.NewsRepository
 import com.example.newsapp.domain.models.NewsModel
 import kotlinx.coroutines.flow.MutableStateFlow

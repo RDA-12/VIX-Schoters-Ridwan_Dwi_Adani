@@ -65,7 +65,11 @@ class BookmarkFragment : Fragment() {
                     viewModel.deleteBookmarkedNews(it)
                 },
                 onItemClickListener = {
-                    // TODO: go to detail screen
+                    findNavController().navigate(
+                        BookmarkFragmentDirections.actionBookmarkFragmentToDetailNewsFragment(
+                            it.url
+                        )
+                    )
                 }
             )
             rvNews.adapter = bookmarkedNewsList
@@ -89,6 +93,14 @@ class BookmarkFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun showSnackbar(messageId: Int) {
+        Snackbar.make(
+            binding.root,
+            resources.getString(messageId),
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 
     override fun onDestroyView() {

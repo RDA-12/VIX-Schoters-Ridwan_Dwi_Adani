@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.newsapp.NewsApplication
 import com.example.newsapp.R
 import com.example.newsapp.data.datasource.local.NewsRoomLocalDatabase
@@ -35,8 +36,8 @@ class HomeFragment : Fragment() {
         get() = _binding!!
 
     private val newsListAdapter = NewsListAdapter(
-        // TODO: fix bookmark icon doesn't change when it is clicked
         onBookmarkClickListener = {
+            Log.d(TAG, it.toString())
             if (it.isBookmarked) {
                 viewModel.deleteBookmarkedNews(it)
             } else {
@@ -44,7 +45,11 @@ class HomeFragment : Fragment() {
             }
         },
         onItemClickListener = {
-            // TODO: go to detail screen
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToDetailNewsFragment(
+                    it.url
+                )
+            )
         },
     )
 
@@ -92,7 +97,6 @@ class HomeFragment : Fragment() {
                         showSnackbar(it.messageId)
                     }
                     is HomeUiState.Success -> {
-                        Log.d(TAG, it.data.toString())
                         newsListAdapter.submitList(it.data)
                     }
                     is HomeUiState.Empty -> Unit

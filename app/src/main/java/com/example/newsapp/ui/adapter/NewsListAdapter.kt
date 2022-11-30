@@ -1,6 +1,5 @@
 package com.example.newsapp.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,7 +9,6 @@ import com.example.newsapp.R
 import com.example.newsapp.databinding.NewsItemListBinding
 import com.example.newsapp.domain.models.NewsModel
 import com.facebook.drawee.drawable.ScalingUtils
-import com.google.android.material.button.MaterialButton
 
 class NewsListAdapter(
     private val onItemClickListener: (NewsModel) -> Unit,
@@ -48,12 +46,23 @@ class NewsListAdapter(
                         ScalingUtils.ScaleType.FIT_CENTER
                     )
                 }
+                bindBookmarked(news.isBookmarked)
                 btnBookmark.setOnClickListener {
                     onBookmarkClickListener(news)
+                    bindBookmarked(!news.isBookmarked)
                 }
             }
         }
+
+        private fun bindBookmarked(isBookmarked: Boolean) {
+            if (isBookmarked) {
+                binding.btnBookmark.setIconResource(R.drawable.ic_bookmark_filled)
+            } else {
+                binding.btnBookmark.setIconResource(R.drawable.ic_bookmark_outlined)
+            }
+        }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsListViewHolder {
         return NewsListViewHolder(

@@ -19,9 +19,6 @@ class NewsRepository(
     suspend fun refreshNews() : List<NewsModel> {
         try {
             val response = newsRemoteDatasource.getHeadlines()
-            response.map {
-                it.isBookmarked = newsLocalDatasource.isInBookmark(it.title)
-            }
             newsLocalDatasource.cacheNews(response)
             return response
         } catch (e: Exception) {

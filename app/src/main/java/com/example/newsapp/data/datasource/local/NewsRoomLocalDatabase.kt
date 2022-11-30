@@ -9,6 +9,7 @@ import com.example.newsapp.data.datasource.local.entities.asDomainModel
 import com.example.newsapp.domain.models.NewsModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 
 
@@ -34,15 +35,19 @@ class NewsRoomLocalDatabase(
     }
 
     override suspend fun deleteBookmarkedNews(news: NewsModel) {
-        bookmarkedNewsDao.delete(BookmarkedNewsEntity.fromDomainModel(news))
+        bookmarkedNewsDao.delete(news.title)
     }
 
     override fun getCachedNews(): Flow<List<NewsModel>> {
-        return newsDao.getAllNews().map {
-            it.map {
-                it.asDomainModel()
+        return newsDao.getAllNews()
+            .combine(bookmarkedNewsDao.getAllBookmarkedTitle()) { allNews, bookmarkedTitle ->
+                allNews.map {
+                    val isBookmarked = it.title in bookmarkedTitle
+                    val news = it.asDomainModel()
+                    news.isBookmarked = isBookmarked
+                    news
+                }
             }
-        }
     }
 
     override fun getAllBookmarkedNews(): Flow<List<NewsModel>> {
@@ -51,10 +56,6 @@ class NewsRoomLocalDatabase(
                 it.asDomainModel()
             }
         }
-    }
-
-    override fun isInBookmark(title: String): Boolean {
-        return title in bookmarkedNewsDao.getAllBookmarkedTitle()
     }
 
 

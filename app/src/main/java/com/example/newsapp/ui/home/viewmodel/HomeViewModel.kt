@@ -64,7 +64,6 @@ class HomeViewModel(private val newsRepository: NewsRepository) : ViewModel() {
     }
 
     fun bookmarkNews(news: NewsModel) {
-        _uiState.value = HomeUiState.Loading
         viewModelScope.launch {
             newsRepository.bookmarkNews(news)
         }
@@ -72,7 +71,6 @@ class HomeViewModel(private val newsRepository: NewsRepository) : ViewModel() {
     }
 
     fun deleteBookmarkedNews(news: NewsModel) {
-        _uiState.value = HomeUiState.Loading
         viewModelScope.launch {
             newsRepository.deleteBookmarkedNews(news)
         }
