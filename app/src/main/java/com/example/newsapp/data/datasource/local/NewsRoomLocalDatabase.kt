@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 
+
 class NewsRoomLocalDatabase(
     private val newsDao: NewsDao,
     private val bookmarkedNewsDao: BookmarkedNewsDao,
@@ -50,6 +51,10 @@ class NewsRoomLocalDatabase(
                 it.asDomainModel()
             }
         }
+    }
+
+    override fun isInBookmark(title: String): Boolean {
+        return title in bookmarkedNewsDao.getAllBookmarkedTitle()
     }
 
 

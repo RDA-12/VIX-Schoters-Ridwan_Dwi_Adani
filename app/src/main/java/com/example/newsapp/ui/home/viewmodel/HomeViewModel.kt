@@ -37,12 +37,11 @@ class HomeViewModel(private val newsRepository: NewsRepository) : ViewModel() {
     }
 
     fun getNews() {
-        _uiState.value = HomeUiState.Loading
         viewModelScope.launch {
             newsRepository.news.collectLatest {
-                Log.d(TAG, it.toString())
-                if (it.isNullOrEmpty()) {
+                if (it.isEmpty()) {
                     refreshNews()
+                    _uiState.value = HomeUiState.Error(R.string.refresh_error)
                 } else {
                     _uiState.value = HomeUiState.Success(it)
                 }

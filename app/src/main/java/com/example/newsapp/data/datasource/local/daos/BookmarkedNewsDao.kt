@@ -10,10 +10,8 @@ interface BookmarkedNewsDao {
     suspend fun insert(news: BookmarkedNewsEntity)
     @Delete
     suspend fun delete(news: BookmarkedNewsEntity)
-    @Query("SELECT * FROM news")
+    @Query("SELECT * FROM news_bookmark")
     fun getAllNews() : Flow<List<BookmarkedNewsEntity>>
-    @Query("SELECT title FROM news")
-    fun getAllBookmarkedTitle() : Flow<List<String?>>
-    @Query("SELECT * FROM news WHERE id = :id")
-    fun getNews(id: Int) : Flow<BookmarkedNewsEntity>
+    @Query("SELECT title FROM news_bookmark")
+    fun getAllBookmarkedTitle() : List<String?>
 }

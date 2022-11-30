@@ -5,6 +5,8 @@ import com.example.newsapp.data.datasource.local.INewsLocalDatasource
 import com.example.newsapp.data.datasource.remote.INewsRemoteDatasource
 import com.example.newsapp.domain.models.NewsModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.flow.map
 
 class NewsRepository(
     private val newsRemoteDatasource: INewsRemoteDatasource,
@@ -12,11 +14,14 @@ class NewsRepository(
 ) {
     private val TAG = "NewsRepository"
 
-    val news = newsLocalDatasource.getCachedNews()
+    val news: Flow<List<NewsModel>> = newsLocalDatasource.getCachedNews()
 
     suspend fun refreshNews() : List<NewsModel> {
         try {
             val response = newsRemoteDatasource.getHeadlines()
+            response.map {
+                it.isBookmarked = newsLocalDatasource.isInBookmark(it.title)
+            }
             newsLocalDatasource.cacheNews(response)
             return response
         } catch (e: Exception) {

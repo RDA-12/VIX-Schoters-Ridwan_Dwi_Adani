@@ -34,9 +34,19 @@ class HomeFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private val newsListAdapter = NewsListAdapter {
-        // TODO: go to detail screen
-    }
+    private val newsListAdapter = NewsListAdapter(
+        // TODO: fix bookmark icon doesn't change when it is clicked
+        onBookmarkClickListener = {
+            if (it.isBookmarked) {
+                viewModel.deleteBookmarkedNews(it)
+            } else {
+                viewModel.bookmarkNews(it)
+            }
+        },
+        onItemClickListener = {
+            // TODO: go to detail screen
+        },
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,5 +107,10 @@ class HomeFragment : Fragment() {
             resources.getString(messageId),
             Snackbar.LENGTH_LONG
         ).show()
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }

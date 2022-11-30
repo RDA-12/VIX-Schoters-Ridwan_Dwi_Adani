@@ -1,6 +1,6 @@
 package com.example.newsapp.ui.adapter
 
-import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,9 +10,11 @@ import com.example.newsapp.R
 import com.example.newsapp.databinding.NewsItemListBinding
 import com.example.newsapp.domain.models.NewsModel
 import com.facebook.drawee.drawable.ScalingUtils
+import com.google.android.material.button.MaterialButton
 
 class NewsListAdapter(
     private val onItemClickListener: (NewsModel) -> Unit,
+    private val onBookmarkClickListener: (NewsModel) -> Unit,
 ) : ListAdapter<NewsModel, NewsListAdapter.NewsListViewHolder>(DiffCallback) {
 
     object DiffCallback : DiffUtil.ItemCallback<NewsModel>() {
@@ -27,7 +29,8 @@ class NewsListAdapter(
     }
 
     class NewsListViewHolder(
-        private val binding: NewsItemListBinding
+        private val binding: NewsItemListBinding,
+        private val onBookmarkClickListener: (NewsModel) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(news: NewsModel) {
             binding.apply {
@@ -45,13 +48,17 @@ class NewsListAdapter(
                         ScalingUtils.ScaleType.FIT_CENTER
                     )
                 }
+                btnBookmark.setOnClickListener {
+                    onBookmarkClickListener(news)
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsListViewHolder {
         return NewsListViewHolder(
-            NewsItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            NewsItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            onBookmarkClickListener = onBookmarkClickListener,
         )
     }
 

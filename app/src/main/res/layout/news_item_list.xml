@@ -11,15 +11,29 @@
         <TextView
             android:id="@+id/tv_author"
             style="@style/TextAppearance.Material3.BodyMedium"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left"
             android:textFontWeight="700"
             app:layout_constraintBottom_toTopOf="@+id/iv_news"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_bookmark"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
             tools:text="Author" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_bookmark"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            app:icon="@drawable/ic_bookmark_outlined"
+            app:layout_constraintBottom_toTopOf="@+id/iv_news"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_author"
+            app:layout_constraintTop_toTopOf="@id/tv_author" />
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_news"
@@ -29,7 +43,7 @@
             app:layout_constraintBottom_toTopOf="@id/tv_published_at"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_news"
+            app:layout_constraintTop_toBottomOf="@id/tv_author"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView

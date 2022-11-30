@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.newsapp.data.datasource.local.entities.NewsEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -14,10 +15,10 @@ interface NewsDao {
     suspend fun insert(news: NewsEntity)
     @Delete
     suspend fun delete(news: NewsEntity)
+    @Update
+    suspend fun update(news: NewsEntity)
     @Query("SELECT * FROM news")
     fun getAllNews() : Flow<List<NewsEntity>>
-    @Query("SELECT * FROM news WHERE id = :id")
-    fun getNews(id: Int) : Flow<NewsEntity>
     @Query("DELETE FROM news")
     suspend fun deleteAllEntries()
 }

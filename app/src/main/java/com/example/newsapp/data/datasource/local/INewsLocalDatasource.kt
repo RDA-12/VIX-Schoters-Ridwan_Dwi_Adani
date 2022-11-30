@@ -9,4 +9,5 @@ interface INewsLocalDatasource {
     suspend fun deleteBookmarkedNews(news: NewsModel)
     fun getCachedNews() : Flow<List<NewsModel>>
     fun getAllBookmarkedNews() : Flow<List<NewsModel>>
+    fun isInBookmark(title: String) : Boolean
 }

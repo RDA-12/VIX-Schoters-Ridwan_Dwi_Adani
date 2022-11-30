@@ -10,5 +10,5 @@ data class NewsModel(
     val imageUrl: String,
     val publishedAt: String,
     val content: String,
-    val isBookmarked: Boolean,
+    var isBookmarked: Boolean,
 )
